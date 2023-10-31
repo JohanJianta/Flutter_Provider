@@ -13,7 +13,7 @@ dependencies:
   scoped_model: ^2.0.0
   reorderable_grid_view: ^2.2.2
   flutter_colorpicker: ^1.0.3
-  flutter_animate: ^4.2.0+1
+  animated_digit: ^3.2.3
 
 dev_dependencies:
   flutter_test:

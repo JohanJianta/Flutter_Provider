@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:global_counter/global_counter.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:animated_digit/animated_digit.dart';
 import 'dart:math' as math;
 
 Color generatePastelColor() {
@@ -28,6 +29,8 @@ class CounterWidget extends StatefulWidget {
 }
 
 class _CounterWidgetState extends State<CounterWidget> {
+  // value untuk ukuran SizedBox
+  final double _sizedBox = 15;
   int _value = 0;
 
   void increment() {
@@ -53,6 +56,13 @@ class _CounterWidgetState extends State<CounterWidget> {
     });
   }
 
+  void updateColor(Color newColor) {
+    setState(() {
+      // setState agar tampilan ikut terupdate ketika warna berubah
+      widget.counterColor = newColor;
+    });
+  }
+
   // kembalikan index counter dari GlobalState
   int getIndex(BuildContext context) {
     return ScopedModel.of<GlobalState>(context).counters.indexOf(widget);
@@ -60,59 +70,82 @@ class _CounterWidgetState extends State<CounterWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      // Stack agar bisa pakai Positioned
-      children: [
-        // posisikan tombol more di pojok kanan atas
-        Positioned(
-          top: 0,
-          right: 0,
-          child: IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {
-              // Tampilkan list aksi (pass fungsi updateLabel)
-              print("Index: ${getIndex(context)}");
-              showActions(context, getIndex(context), updateLabel);
-            },
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      color: widget.counterColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Stack(
+        // Stack agar bisa pakai Positioned
+        children: [
+          // posisikan tombol more di pojok kanan atas
+          Positioned(
+            top: 0,
+            right: 0,
+            child: IconButton(
+              icon: const Icon(Icons.more_vert),
+              onPressed: () {
+                // Tampilkan list aksi (teruskan fungsi updateLabel & updateColor)
+                showActions(
+                    context, getIndex(context), updateLabel, updateColor);
+              },
+            ),
           ),
-        ),
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                widget.label,
-                style: const TextStyle(
-                  fontSize: 16,
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                // Label Counter
+                Text(
+                  widget.label,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 15),
-              Text(
-                '$_value',
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+
+                SizedBox(height: _sizedBox),
+
+                // animasi increment/decrement value
+                AnimatedDigitWidget(
+                  value: _value,
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 15),
-              ElevatedButton(
-                onPressed: increment,
-                child: const Text('Increment'),
-              ),
-              ElevatedButton(
-                onPressed: decrement,
-                child: const Text('Decrement'),
-              ),
-            ],
+
+                SizedBox(height: _sizedBox),
+
+                // group button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: increment,
+                      icon: const Icon(Icons.add_circle_outline),
+                      iconSize: 35,
+                    ),
+                    SizedBox(width: _sizedBox),
+                    IconButton(
+                      onPressed: decrement,
+                      icon: const Icon(Icons.remove_circle_outline),
+                      iconSize: 35,
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
 void showActions(BuildContext context, int counterIndex,
-    Function(String) updateLabelCallback) {
+    Function(String) updateLabelCallback, Function(Color) updateColorCallback) {
   // Tampilkan list aksi dengan PopupMenuButton
   final RenderBox button = context.findRenderObject() as RenderBox;
   final RenderBox overlay =
@@ -140,7 +173,7 @@ void showActions(BuildContext context, int counterIndex,
         child: const Text('Change Color'),
         onTap: () {
           // edit warna counter
-          showColorPickerDialog(context, counterIndex);
+          showColorPickerDialog(context, counterIndex, updateColorCallback);
         },
       ),
       PopupMenuItem(
@@ -155,7 +188,7 @@ void showActions(BuildContext context, int counterIndex,
 }
 
 Future<void> showChangeLabelDialog(BuildContext context, int counterIndex,
-    Function(String) onLabelUpdated) async {
+    Function(String) updateLabelCallback) async {
   // ambil label counter saat ini lewat GlobalState
   String currentLabel =
       ScopedModel.of<GlobalState>(context).counters[counterIndex].label;
@@ -183,7 +216,7 @@ Future<void> showChangeLabelDialog(BuildContext context, int counterIndex,
             onPressed: () {
               // cek apakah label berubah
               if (newLabel != currentLabel && newLabel.isNotEmpty) {
-                onLabelUpdated(newLabel);
+                updateLabelCallback(newLabel);
               }
               Navigator.of(context).pop();
             },
@@ -194,8 +227,8 @@ Future<void> showChangeLabelDialog(BuildContext context, int counterIndex,
   );
 }
 
-Future<void> showColorPickerDialog(
-    BuildContext context, int counterIndex) async {
+Future<void> showColorPickerDialog(BuildContext context, int counterIndex,
+    Function(Color) updateColorCallback) async {
   // ambil warna counter saat ini lewat GlobalState
   Color currentColor =
       ScopedModel.of<GlobalState>(context).counters[counterIndex].counterColor;
@@ -229,8 +262,7 @@ Future<void> showColorPickerDialog(
             onPressed: () {
               // cek apakah color berubah
               if (newColor != currentColor) {
-                ScopedModel.of<GlobalState>(context)
-                    .updateColor(counterIndex, newColor);
+                updateColorCallback(newColor);
               }
               Navigator.of(context).pop();
             },

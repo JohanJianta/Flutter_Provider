@@ -14,11 +14,12 @@ class MyCounterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScopedModel<GlobalState>(
-      // set model agar bisa dipakai oleh child & descendants
+      // tambah model agar bisa dipakai oleh child & descendants
       model: globalStateModel,
       child: MaterialApp(
         home: Scaffold(
-          appBar: AppBar(title: const Text('Global State Example')),
+          appBar: AppBar(
+              title: const Text('Session 4 Assignments - Flutter Provider')),
           body: const CounterList(),
           floatingActionButton: const AddCounterButton(),
         ),
@@ -41,14 +42,10 @@ class CounterList extends StatelessWidget {
           childAspectRatio: 8.0 / 9.0,
           // map seluruh counter dalam bentuk list card
           children: model.counters.map((counter) {
-            return Card(
-              clipBehavior: Clip.antiAlias,
-              // tambah key agar sistem bisa bedakan tiap Card
+            return ReorderableItemView(
+              // tambah key & index agar sistem bisa bedakan tiap Card
               key: ValueKey(counter),
-              color: counter.counterColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
+              index: model.counters.indexOf(counter),
               child: counter,
             );
           }).toList(),
