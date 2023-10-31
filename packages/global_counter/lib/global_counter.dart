@@ -18,10 +18,19 @@ class GlobalState extends Model {
 
   void removeCounter(int index) {
     if (index >= 0 && index < _counters.length) {
+      print("Remove: $index");
       _counters.removeAt(index);
       notifyListeners();
       // update Model ketika hapus counter
     }
+  }
+
+  void reorderCounter(int oldIndex, int newIndex) {
+    // hapus counter dari indeks lama, terus masukkan kembali ke indeks baru
+    CounterWidget counter = _counters.removeAt(oldIndex);
+    _counters.insert(newIndex, counter);
+    notifyListeners();
+    // update Model agar perubahan tersimpan
   }
 
   void updateColor(int index, Color newColor) {

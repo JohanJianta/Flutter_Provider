@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:global_counter/global_counter.dart';
+import 'package:reorderable_grid_view/reorderable_grid_view.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 void main() => runApp(MyCounterApp());
@@ -34,7 +35,7 @@ class CounterList extends StatelessWidget {
     // ScopedModelDescendant agar list counter terupdate ketika counter bertambah atau berkurang
     return ScopedModelDescendant<GlobalState>(
       builder: (context, child, model) {
-        return GridView.count(
+        return ReorderableGridView.count(
           crossAxisCount: 2,
           padding: const EdgeInsets.all(16.0),
           childAspectRatio: 8.0 / 9.0,
@@ -42,7 +43,7 @@ class CounterList extends StatelessWidget {
           children: model.counters.map((counter) {
             return Card(
               clipBehavior: Clip.antiAlias,
-              // tambah key agar sistem bisa bedakan tiap counter
+              // tambah key agar sistem bisa bedakan tiap Card
               key: ValueKey(counter),
               color: counter.counterColor,
               shape: RoundedRectangleBorder(
@@ -51,6 +52,10 @@ class CounterList extends StatelessWidget {
               child: counter,
             );
           }).toList(),
+          onReorder: (int oldIndex, int newIndex) {
+            // reorder list Card ketika Card ditekan [Notes: TEKAN LAMAAAA!!!]
+            model.reorderCounter(oldIndex, newIndex);
+          },
         );
       },
     );

@@ -71,6 +71,7 @@ class _CounterWidgetState extends State<CounterWidget> {
             icon: const Icon(Icons.more_vert),
             onPressed: () {
               // Tampilkan list aksi (pass fungsi updateLabel)
+              print("Index: ${getIndex(context)}");
               showActions(context, getIndex(context), updateLabel);
             },
           ),
