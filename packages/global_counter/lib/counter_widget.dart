@@ -23,6 +23,8 @@ class CounterWidget extends StatefulWidget {
 
   String label = 'New Counter';
   Color counterColor = generatePastelColor();
+  // value dipindahkan ke sini agar nilainya tidak tereset ketika pindah page
+  int value = 0;
 
   @override
   _CounterWidgetState createState() => _CounterWidgetState();
@@ -31,20 +33,19 @@ class CounterWidget extends StatefulWidget {
 class _CounterWidgetState extends State<CounterWidget> {
   // value untuk ukuran SizedBox
   final double _sizedBox = 15;
-  int _value = 0;
 
   void increment() {
     // setState agar tampilan ikut terupdate ketika value bertambah
     setState(() {
-      _value++;
+      widget.value++;
     });
   }
 
   void decrement() {
-    if (_value > 0) {
+    if (widget.value > 0) {
       // setState agar tampilan ikut terupdate ketika value berkurang
       setState(() {
-        _value--;
+        widget.value--;
       });
     }
   }
@@ -107,9 +108,9 @@ class _CounterWidgetState extends State<CounterWidget> {
 
                 SizedBox(height: _sizedBox),
 
-                // animasi increment/decrement value
+                // animasi increment/decrement value pakai package animated_digit
                 AnimatedDigitWidget(
-                  value: _value,
+                  value: widget.value,
                   textStyle: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
