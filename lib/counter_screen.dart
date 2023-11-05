@@ -1,50 +1,17 @@
-import 'package:counter_app/second_screen.dart';
-import 'package:counter_app/third_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:global_counter/global_counter.dart';
 import 'package:reorderable_grid_view/reorderable_grid_view.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class FirstScreen extends StatefulWidget {
-  const FirstScreen({super.key});
-
-  @override
-  State<FirstScreen> createState() => _FirstScreenState();
-}
-
-class _FirstScreenState extends State<FirstScreen> {
-  int _currentIndex = 0;
-  Widget screen = const CounterList();
-
-  final List<Widget> screens = [
-    const CounterList(),
-    const SecondScreen(),
-    const ThirdScreen()
-  ];
+class CounterScreen extends StatelessWidget {
+  const CounterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Session 5 Assignments - Navigation')),
-      body: screen,
+      appBar: AppBar(title: const Text('Counter List')),
+      body: const CounterList(),
       floatingActionButton: const AddCounterButton(),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "First"),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Second"),
-          BottomNavigationBarItem(icon: Icon(Icons.delete), label: "Third"),
-        ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-            screen = screens[index];
-          });
-
-          // final List<String> routes = ['/', '/second', '/third'];
-          // Navigator.of(context).pushNamed(routes[index]);
-        },
-      ),
     );
   }
 }
