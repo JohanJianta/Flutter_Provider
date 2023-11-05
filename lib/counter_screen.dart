@@ -21,7 +21,8 @@ class CounterList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ScopedModelDescendant agar list counter terupdate ketika counter bertambah atau berkurang
+    // ScopedModelDescendant agar list Counter terupdate
+    // ketika counter bertambah atau berkurang
     return ScopedModelDescendant<GlobalState>(
       builder: (context, child, model) {
         return ReorderableGridView.count(
@@ -38,7 +39,8 @@ class CounterList extends StatelessWidget {
             );
           }).toList(),
           onReorder: (int oldIndex, int newIndex) {
-            // reorder list Card ketika Card ditekan [Notes: TEKAN LAMAAAA!!!]
+            // reorder list Card (Counter) ketika Card ditekan
+            // [Notes: TEKAN LAMAAAA!!!]
             model.reorderCounter(oldIndex, newIndex);
           },
         );

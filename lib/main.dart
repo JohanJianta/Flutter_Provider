@@ -20,7 +20,7 @@ class MyCounterApp extends StatelessWidget {
       child: const MaterialApp(
         // set MainScreen sebagai tampilan awal
         initialRoute: '/',
-        // list Route navigasi
+        // set list Route navigasi
         onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );

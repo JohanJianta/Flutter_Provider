@@ -10,9 +10,10 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 0;
-
+  // list section
   final List<Widget> screens = [const FirstSection(), const SecondSection()];
+
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,7 @@ class _MainScreenState extends State<MainScreen> {
               icon: Icon(Icons.post_add), label: "Screen Generator"),
         ],
         onTap: (index) {
+          // set index baru untuk pindah section
           setState(() {
             _currentIndex = index;
           });

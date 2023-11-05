@@ -13,7 +13,7 @@ class GeneratorScreen extends StatefulWidget {
 class _GeneratorScreenState extends State<GeneratorScreen> {
   final _textFieldController = TextEditingController();
 
-  final snackBar =
+  final _snackBar =
       const SnackBar(content: Text('Maximum limit of generated screens is 20'));
 
   int _screenCount = 0;
@@ -66,7 +66,7 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
                             int.parse(_textFieldController.text);
 
                         if (newScreenCount > 20) {
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          ScaffoldMessenger.of(context).showSnackBar(_snackBar);
                         } else {
                           updateScreenCount(newScreenCount);
                         }
