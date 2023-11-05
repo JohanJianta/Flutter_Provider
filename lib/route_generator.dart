@@ -14,7 +14,7 @@ class RouteGenerator {
       case '/counter':
         return MaterialPageRoute(builder: (_) => const CounterScreen());
       case '/generator':
-        return MaterialPageRoute(builder: (_) => GeneratorScreen());
+        return MaterialPageRoute(builder: (_) => const GeneratorScreen());
       case '/generatedScreen':
         if (args is String) {
           return MaterialPageRoute(
