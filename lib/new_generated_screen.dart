@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 
 class NewGeneratedScreen extends StatelessWidget {
-  final String index;
-
-  const NewGeneratedScreen({Key? key, required this.index}) : super(key: key);
+  const NewGeneratedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // terima argument indeks dari halaman sebelumnya
+    final String index = ModalRoute.of(context)!.settings.arguments as String;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Generated Screen'),
+        title: Text('Generated Screen $index'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "This is Screen-$index",
+              "This is Screen $index",
               style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 10),

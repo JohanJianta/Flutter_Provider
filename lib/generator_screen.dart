@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:counter_app/error_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,9 +13,6 @@ class GeneratorScreen extends StatefulWidget {
 
 class _GeneratorScreenState extends State<GeneratorScreen> {
   final _textFieldController = TextEditingController();
-
-  final _snackBar =
-      const SnackBar(content: Text('Maximum limit of generated screens is 20'));
 
   int _screenCount = 0;
 
@@ -58,21 +56,26 @@ class _GeneratorScreenState extends State<GeneratorScreen> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  ElevatedButton(
-                    // generate screen berdasarkan value dari TextField
-                    onPressed: () {
-                      if (_textFieldController.text.isNotEmpty) {
-                        final newScreenCount =
-                            int.parse(_textFieldController.text);
+                  // taruh button dalam SizedBox agar bisa atur height
+                  SizedBox(
+                    height: 50,
+                    child: ElevatedButton(
+                      // generate screen berdasarkan value dari TextField
+                      onPressed: () {
+                        if (_textFieldController.text.isNotEmpty) {
+                          final newScreenCount =
+                              int.parse(_textFieldController.text);
 
-                        if (newScreenCount > 20) {
-                          ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                        } else {
-                          updateScreenCount(newScreenCount);
+                          if (newScreenCount > 20) {
+                            showErrorSnackBar(context,
+                                "Maximum limit of generated screens is 20");
+                          } else {
+                            updateScreenCount(newScreenCount);
+                          }
                         }
-                      }
-                    },
-                    child: const Text('Generate'),
+                      },
+                      child: const Text('Generate'),
+                    ),
                   ),
                 ],
               ),
@@ -115,11 +118,17 @@ class ScreenList extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed('/generatedScreen',
-                      arguments: (index + 1).toString());
+                  try {
+                    // buka halaman baru dan pass indeks sebagai argument
+                    Navigator.of(context).pushNamed('/generatedScreen',
+                        arguments: (index + 1).toString());
+                  } catch (e) {
+                    showErrorSnackBar(
+                        context, "Screen not found, please try another screen");
+                  }
                 },
                 child: ListTile(
-                  title: Text("Page ${index + 1}"),
+                  title: Text("Screen ${index + 1}"),
                 ),
               );
             },

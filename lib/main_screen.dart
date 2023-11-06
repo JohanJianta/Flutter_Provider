@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:counter_app/first_section.dart';
 import 'package:counter_app/second_section.dart';
@@ -11,7 +12,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   // list section
-  final List<Widget> screens = [const FirstSection(), const SecondSection()];
+  final List<Widget> sections = [const FirstSection(), const SecondSection()];
 
   int _currentIndex = 0;
 
@@ -19,7 +20,18 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Session 5 Assignments - Navigation')),
-      body: screens[_currentIndex],
+      body: PageTransitionSwitcher(
+        // set animasi untuk transisi antar-section
+        transitionBuilder: (Widget child, Animation<double> primaryAnimation,
+            Animation<double> secondaryAnimation) {
+          return FadeThroughTransition(
+            animation: primaryAnimation,
+            secondaryAnimation: secondaryAnimation,
+            child: child,
+          );
+        },
+        child: sections[_currentIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         items: const [
