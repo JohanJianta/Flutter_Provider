@@ -1,16 +1,11 @@
-# counter_app
+# Counter App & Navigation
 
-A new Flutter project.
+Untuk menjalankan aplikasi, terlebih dahulu jalankan perintah flutter pub get di terminal untuk mendapatkan dependencies yang dibutuhkan. Jika perlu, jalankan juga di dalam /packages/global_counter/. Setelah itu, jalankan perintah flutter run di terminal. Maka aplikasi akan berjalan sesuai dengan device yang dipilih.
 
-## Getting Started
+## Info Branch
 
-This project is a starting point for a Flutter application.
+Tiap branch ditujukan untuk tugas berbeda, yaitu:
+- Main --> Session 4 Assignment
+- Assignment-5-Navigation --> Session 5 Assignment  (ya iyalah -_-)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Link ppt/canva berada [di sini](https://docs.flutter.dev/cookbook)
