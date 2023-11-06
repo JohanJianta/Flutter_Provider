@@ -8,4 +8,4 @@ Tiap branch ditujukan untuk tugas berbeda, yaitu:
 - Main --> Session 4 Assignment
 - Assignment-5-Navigation --> Session 5 Assignment  (ya iyalah -_-)
 
-Link ppt/canva berada [di sini](https://www.canva.com/design/DAFyyZBA24c/gUd7L4HuF_uBR53JKL9VqQ/view?utm_content=DAFyyZBA24c&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+PPT/Canva bisa diakses [di sini](https://www.canva.com/design/DAFyyZBA24c/gUd7L4HuF_uBR53JKL9VqQ/view?utm_content=DAFyyZBA24c&utm_campaign=designshare&utm_medium=link&utm_source=editor).
