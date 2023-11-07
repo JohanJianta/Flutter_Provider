@@ -22,10 +22,8 @@ class NewGeneratedScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextButton(
-              onPressed: () {
-                // Navigate to Screen Generator
-                Navigator.of(context).pop();
-              },
+              // Navigate to Screen Generator
+              onPressed: () => Navigator.of(context).pop(),
               child: const Text('Back To Screen Generator'),
             ),
           ],
